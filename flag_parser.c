@@ -11,7 +11,7 @@ void print_usage(const char *help, Flag *flags) {
         } else if (flags[i].has_arg == optional_argument) {
             printf("<optional argument> %s", flags[i].help);
         } else {
-            printf("<no argument>       %s", flags[i].help));
+            printf("<no argument>       %s", flags[i].help);
         }
         printf("\n");
 
