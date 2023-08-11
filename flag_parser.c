@@ -7,11 +7,11 @@ void print_usage(const char *help, Flag *flags) {
     for (int i = 0; flags[i].name != NULL; i++) {
         printf("--%s : ", flags[i].name);
         if (flags[i].has_arg == required_argument) {
-            printf("required argument");
+            printf("<required argument> %s", flags[i].help);
         } else if (flags[i].has_arg == optional_argument) {
-            printf("optional argument");
+            printf("<optional argument> %s", flags[i].help);
         } else {
-            printf("no argument");
+            printf("<no argument>       %s", flags[i].help));
         }
         printf("\n");
 
