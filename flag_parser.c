@@ -5,7 +5,7 @@
 #define BYTE_SIZE 8
 
 
-void save(Flag *flags, const char *usage, int i, void *temp, const char *endptr, int j, int size);
+void save(Flag *flags, const char *usage, void *temp, const char *endptr, int j, int size);
 
 void print_usage(const char *help) {
     printf("%s\n", help);
@@ -60,19 +60,19 @@ void parse_flags(int argc, char *argv[], Flag *flags, int size, const char *usag
                     case INT32_T:
                     case INT64_T:
                         temp_i = strtoll(optarg, &endptr, 10);
-                        save(flags, usage, i, &temp_i, endptr, j, flags[i].type);
+                        save(flags, usage, &temp_i, endptr, j, flags[j].type);
 
                         j = size;
                         break;
                     case FLOAT:
                         temp_f = strtof(optarg, &endptr);
-                        save(flags, usage, i, &temp_f, endptr, j, sizeof(float));
+                        save(flags, usage, &temp_f, endptr, j, sizeof(float));
 
                         j = size;
                         break;
                     case DOUBLE:
                         temp_d = strtod(optarg, &endptr);
-                        save(flags, usage, i, &temp_d, endptr, j, sizeof(double));
+                        save(flags, usage, &temp_d, endptr, j, sizeof(double));
 
                         j = size;
                         break;
@@ -101,7 +101,7 @@ void parse_flags(int argc, char *argv[], Flag *flags, int size, const char *usag
     }
 }
 
-void save(Flag *flags, const char *usage, int i, void *temp, const char *endptr, int j, int size) {
+void save(Flag *flags, const char *usage, void *temp, const char *endptr, int j, int size) {
     if (endptr == optarg) {
         printf("Invalid Flag Format!");
         print_usage(usage);
