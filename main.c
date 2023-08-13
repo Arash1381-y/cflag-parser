@@ -15,11 +15,10 @@ int main(int argc, char *argv[]) {
                         "Description:\n"
                         "  This program demonstrates flag parsing using the flag_parser library.\n\n"
                         "Options:\n"
-                        "  -t, --threads NUM     Number of threads to use (required, range: -32,768 to 32,767)\n"
-                        "  -o, --optional_int [NUM]\n"
-                        "                        Optional integer value (default: 0, range: -32,768 to 32,767)\n"
-                        "  -a, --array_size NUM  Size of the array (required, range: -32,768 to 32,767)\n"
-                        "  -h, --help            Display this help message and exit\n\n"
+                        "--threads NUM                         Number of threads to use (required, range: -32,768 to 32,767)\n"
+                        "--optional_int [NUM]                  Optional integer value (default: 0, range: -32,768 to 32,767)\n"
+                        "--array_size NUM                      Size of the array (required, range: -32,768 to 32,767)\n"
+                        "--help                                Display this help message and exit\n\n"
                         "Usage Examples:\n"
                         "  program_name -t 4 -a 100            # Run with 4 threads and array size 100\n"
                         "  program_name --optional_int 42      # Run with optional integer set to 42\n"
@@ -33,7 +32,6 @@ int main(int argc, char *argv[]) {
             {"optional-int", optional_argument, 'o', &optional_int, INT16_T, "Optional int"},
             {"array-size",   required_argument, 'a', &array_size,   INT16_T, "Size of the array"},
     };
-
 
 
     // Parse flags
