@@ -2,6 +2,9 @@
 #include "flag_parser.h"
 
 
+#define BYTE_SIZE 8
+
+
 void save(Flag *flags, const char *usage, int i, void *temp, const char *endptr, int j, int size);
 
 void print_usage(const char *help) {
@@ -37,6 +40,7 @@ void parse_flags(int argc, char *argv[], Flag *flags, int size, const char *usag
     int64_t temp_i;
     float temp_f;
     double temp_d;
+    bool find;
 
     // parse the options
     int c;
@@ -48,7 +52,9 @@ void parse_flags(int argc, char *argv[], Flag *flags, int size, const char *usag
         }
 
         for (int j = 0; j < size; j++) {
+            find = false;
             if (c == flags[j].val) {
+                find = true;
                 switch (flags[j].type) {
                     case INT16_T:
                     case INT32_T:
@@ -76,22 +82,19 @@ void parse_flags(int argc, char *argv[], Flag *flags, int size, const char *usag
 
                         j = size;
                         break;
-
-                    case 'h':
-
-                    default:
-                        print_usage(usage);
-                        exit(EXIT_FAILURE);
                 }
             }
+        }
+        if (!find) {
+            fflush(stderr);
+            exit(EXIT_FAILURE);
         }
     }
 
     // check if all required flags are present
-    for (int j = 0; flags[j].name != NULL; j++) {
+    for (int j = 0; j < size - 1; j++) {
         if (flags[j].has_arg == required_argument && flags[j].present == 0) {
-            printf("Missing required flag: --%s\n", flags[j].name);
-            print_usage(flags[j].help);
+            fprintf(stderr, "%s: missing required option '--%s'\n", argv[0], flags[j].name);
             exit(EXIT_FAILURE);
 
         }
@@ -108,7 +111,7 @@ void save(Flag *flags, const char *usage, int i, void *temp, const char *endptr,
         print_usage(usage);
         exit(EXIT_FAILURE);
     } else {
-        memcpy(flags[j].save, temp, size);
+        memcpy(flags[j].save, temp, size / BYTE_SIZE);
     }
     flags[j].present = 1;
 }
