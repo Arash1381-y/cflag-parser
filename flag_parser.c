@@ -82,6 +82,12 @@ void parse_flags(int argc, char *argv[], Flag *flags, int size, const char *usag
 
                         j = size;
                         break;
+                    case NO_VAL:
+                        *(bool *) flags[j].save = true;
+                        flags[j].present = 1;
+
+                        j = size;
+                        break;
                 }
             }
         }

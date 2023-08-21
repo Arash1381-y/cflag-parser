@@ -14,7 +14,8 @@ typedef enum field_type {
     INT64_T = 64,
     FLOAT,
     DOUBLE,
-    STRING
+    STRING,
+    NO_VAL
 } field_type_t;
 
 
